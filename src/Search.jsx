@@ -7,9 +7,9 @@ export default function Search(props) {
   return (
     <>
       <div className="mx-auto font-semibold p-4 shadow-md shadow-[#1B4242]/30  max-sm:h-30 max-sm:text-nowrap">
-        <h2 className="font-bold text-[#EE7214] text-[3rem] max-sm:text-2xl">
+        <h3 className="font-bold text-[#EE7214] text-[3rem] max-sm:text-2xl">
         Search a Github Repository
-        </h2>
+        </h3>
         <div className="flex justify-center">
           <form onSubmit={handleSub}>
             <input

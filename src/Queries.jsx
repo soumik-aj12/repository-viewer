@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Pagination } from "./pagination";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 export default function Queries(props) {
   const { repo } = props;
   const [currentPage, setCurrentPage] = useState(1);
@@ -7,19 +9,19 @@ export default function Queries(props) {
   const indexOfLastQuery = currentPage * queriesPerPage;
   const indexOfFirstQuery = indexOfLastQuery - queriesPerPage;
   const currentQueries = repo.slice(indexOfFirstQuery, indexOfLastQuery);
-  const [showPopup, setShowPopup] = useState(false);
 
-  const handleCloneClick = (cloneUrl, event) => {
-    event.preventDefault();
-    navigator.clipboard.writeText(cloneUrl);
-    setShowPopup(true);
-    setTimeout(() => setShowPopup(false), 2000);
+  const [copied, setCopied] = useState(null);
+  const handleCopy = (id) => {
+    setCopied(id);
+    setTimeout(() => {
+      setCopied(null);
+    }, 1000);
   };
+
   const paginate = (pageNums) => setCurrentPage(pageNums);
   return (
     <>
       <div className="font-semibold m-6 grid grid-cols-2 gap-4 items-start">
-        {showPopup && <div className="popup">Copied to clipboard</div>}
         {currentQueries.map((r) => (
           <div key={r.id} className="text-[#EE7214]">
             {/* {console.log(r)} */}
@@ -41,12 +43,16 @@ export default function Queries(props) {
                   <a href={r.html_url}>Visit</a>
                 </p>
                 <p className="font-bold">
-                  <a
-                    href={r.clone_url}
-                    onClick={(event) => handleCloneClick(r.clone_url, event)}
+                  <CopyToClipboard
+                    text={r.clone_url}
+                    onCopy={()=>handleCopy(r.id)}
                   >
-                    Clone
-                  </a>
+                    <button className="relative hover:bg-orange-600 hover:text-zinc-50 hover:border-4 hover:border-orange-600 hover:p-0.1 hover:rounded-md" >Clone</button>
+                  </CopyToClipboard>
+
+                  {copied === r.id ? (
+                    <span className="transition delay-150 bg-orange-600 absolute bottom-3 right-1 border-4 border-orange-600 rounded-md text-zinc-50 text-sm">Copied!</span>
+                  ) : null}
                 </p>
               </div>
             </div>
