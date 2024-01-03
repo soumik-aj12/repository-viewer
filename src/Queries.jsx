@@ -26,7 +26,7 @@ export default function Queries(props) {
           <div key={r.id} className="text-[#EE7214]">
             {/* {console.log(r)} */}
             <div className="transition ease-in-out delay-150 bg-white rounded-md p-4 hover:-translate-y-1 hover:scale-40 max-sm:flex max-sm:flex-col max-sm:shrink-0">
-              <h2 className="font-extrabold">
+              <h2 className="font-extrabold overflow-x-auto whitespace-nowrap">
                 {r.name} - {r.owner.login}
               </h2>
               <span className="max-sm:overflow-x-auto max-sm:whitespace-nowrap">
